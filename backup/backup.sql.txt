@@ -1,0 +1,20 @@
+create database backup
+
+create table backup_list
+(
+	id int NOT NULL AUTO_INCREMENT,    
+	name varchar(50) not null,         
+	path varchar(500) not null,       
+	saved_path varchar(500) not null,  
+	day_1 boolean not null,             
+	day_2 boolean not null,
+	day_3 boolean not null,
+	day_4 boolean not null,
+	day_5 boolean not null,
+	day_6 boolean not null,
+	day_7 boolean not null,
+	nb_persist integer not null,        
+	parent_directory varchar(50),                    
+	primary key (id)
+	
+);    
