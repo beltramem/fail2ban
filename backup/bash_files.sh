@@ -10,8 +10,8 @@ echo "Date du jour : $datedujour"
 
 
 # attributs pour la connexion    la base
-MYSQL_USER=""
-MYSQL_PASS=""
+MYSQL_USER="root"
+MYSQL_PASS="K3fmFLa445xG"
 MYSQL_HOST="127.0.0.1"
 
 
@@ -22,18 +22,20 @@ do
         file_persist=$(mysql -B -s -h $MYSQL_HOST -u $MYSQL_USER --password=$MYSQL_PASS -e "use backup; select day_${day_of_week} from backup_list where id=${file_id}")
         true="1"
         if [ "$file_persist" -eq "$true" ]; then
-                file_name=$(mysql -B -s -h $MYSQL_HOST -u $MYSQL_USER --password=$MYSQL_PASS -e "use backup; select name from backup_list where id=${file_id}")
+                
+		file_name=$(mysql -B -s -h $MYSQL_HOST -u $MYSQL_USER --password=$MYSQL_PASS -e "use backup; select name from backup_list where id=${file_id}")
                 file_path=$(mysql -B -s -h $MYSQL_HOST -u $MYSQL_USER --password=$MYSQL_PASS -e "use backup; select path from backup_list where id=${file_id}")
-                file_saved_path=$(mysql -B -s -h $MYSQL_HOST -u $MYSQL_USER --password=$MYSQL_PASS -e "use backup; select saved_path from backup_list where id=${file_i$
-                file_parent_directory=$(mysql -B -s -h $MYSQL_HOST -u $MYSQL_USER --password=$MYSQL_PASS -e "use backup; select parent_directory from backup_list where$
-                file_nb_persist=$(mysql -B -s -h $MYSQL_HOST -u $MYSQL_USER --password=$MYSQL_PASS -e "use backup; select nb_persist from backup_list where id=${file_i$
+                file_saved_path=$(mysql -B -s -h $MYSQL_HOST -u $MYSQL_USER --password=$MYSQL_PASS -e "use backup; select saved_path from backup_list where id=${file_id}")
+                file_parent_directory=$(mysql -B -s -h $MYSQL_HOST -u $MYSQL_USER --password=$MYSQL_PASS -e "use backup; select parent_directory from backup_list where id=${file_id}")
+                file_nb_persist=$(mysql -B -s -h $MYSQL_HOST -u $MYSQL_USER --password=$MYSQL_PASS -e "use backup; select nb_persist from backup_list where id=${file_id}")
+
 
                 if [ $file_parent_directory == "null" ]; then
-                        BACKUP_DIR=$file_saved_path/$datedujour
-                        BACKUP_OLD=$file_saved_path/*
+                        BACKUP_DIR=/$file_saved_path/$datedujour
+                        BACKUP_OLD=/$file_saved_path/*
                 else
-                        BACKUP_DIR=$file_saved_path/$datedujour/$file_parent_directory
-                        BACKUP_OLD=$file_saved_path/*/$file_parent_directory
+                        BACKUP_DIR=/$file_saved_path/$datedujour/$file_parent_directory
+                        BACKUP_OLD=/$file_saved_path/*/$file_parent_directory
                 fi
                 test -d $BACKUP_DIR || mkdir -p $BACKUP_DIR
                 
@@ -54,4 +56,3 @@ do
                 fi
         fi
 done
-);
